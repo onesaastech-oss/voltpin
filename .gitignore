@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.htaccess
+.well-known/
+404.html
+502.html
+index.html
+yarn.lock
