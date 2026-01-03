@@ -136,6 +136,16 @@ export const orderAPI = {
       method: 'GET',
     });
   },
+
+  getOrderStatus: async (orderId: string) => {
+    const queryParams = new URLSearchParams();
+    queryParams.append('orderId', orderId);
+
+    console.log('Calling order status API:', `/order/order-status?${queryParams.toString()}`);
+    return apiCall(`/order/order-status?${queryParams.toString()}`, {
+      method: 'GET',
+    });
+  },
 };
 
 // Transaction APIs
@@ -153,12 +163,24 @@ export const transactionAPI = {
     });
   },
 
-  getTransactionStatus: async (clientTxnId: string, txnId?: string) => {
+  getTransactionStatus: async (clientTxnId?: string, txnId?: string) => {
     const queryParams = new URLSearchParams();
-    queryParams.append('client_txn_id', clientTxnId);
-    if (txnId) queryParams.append('txn_id', txnId);
+    // Handle both client_txn_id and txn_id - use whichever is provided
+    if (clientTxnId) {
+      queryParams.append('client_txn_id', clientTxnId);
+    }
+    if (txnId) {
+      queryParams.append('txn_id', txnId);
+    }
 
-    return apiCall(`/transaction/status?${queryParams.toString()}`, {
+    // Build query string - only add ? if there are params
+    const queryString = queryParams.toString();
+    const endpoint = queryString 
+      ? `/transaction/status?${queryString}`
+      : '/transaction/status';
+
+    console.log('Calling transaction status API:', endpoint);
+    return apiCall(endpoint, {
       method: 'GET',
     });
   },
@@ -172,10 +194,32 @@ export const walletAPI = {
     });
   },
 
-  addCoins: async (amount: number) => {
+  addCoins: async (amount: number, redirectUrl?: string) => {
+    const body: Record<string, any> = { amount };
+    if (redirectUrl) {
+      body.redirectUrl = redirectUrl;
+    }
+
     return apiCall('/wallet/add', {
       method: 'POST',
-      body: JSON.stringify({ amount }),
+      body: JSON.stringify(body),
+    });
+  },
+
+  getLedger: async (params: {
+    page?: number;
+    limit?: number;
+    startDate?: string;
+    endDate?: string;
+  } = {}) => {
+    const queryParams = new URLSearchParams();
+    if (params.page) queryParams.append('page', params.page.toString());
+    if (params.limit) queryParams.append('limit', params.limit.toString());
+    if (params.startDate) queryParams.append('startDate', params.startDate);
+    if (params.endDate) queryParams.append('endDate', params.endDate);
+
+    return apiCall(`/wallet/ledger?${queryParams.toString()}`, {
+      method: 'GET',
     });
   },
 };
