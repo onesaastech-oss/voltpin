@@ -20,6 +20,12 @@ export default function Social() {
       href: 'https://www.facebook.com/share/1CkNP65eez/',
     },
     {
+      id: 'whatsapp',
+      name: 'WhatsApp Support',
+      icon: FaWhatsapp,
+      href: 'https://wa.me/917678379687',
+    },
+    {
       id: 'email',
       name: 'voltpin.in@gmail.com',
       icon: FaEnvelope,
