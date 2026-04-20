@@ -645,45 +645,48 @@ export default function Checkout({ gameId = 'default-game-id' }: CheckoutProps =
                 <button
                   key={category}
                   onClick={() => setSelectedCurrency(category)}
-                  className={`shrink-0 w-20 aspect-square bg-white rounded-lg shadow-md p-2 flex flex-col items-center justify-center gap-1 touch-manipulation border-2 transition-all ${
+                  className={`shrink-0 w-[100px] aspect-square rounded-[20px] p-2 flex flex-col items-center justify-center gap-1 touch-manipulation transition-all relative overflow-hidden ${
                     isSelected
-                      ? 'border-[#2F6BFD] shadow-lg'
-                      : 'border-gray-200'
-                  } relative overflow-hidden`}
+                      ? 'bg-[#4378FF] border-[4px] border-white shadow-[0_4px_12px_rgba(67,120,255,0.3)]'
+                      : 'bg-white border-[2px] border-gray-100 shadow-sm'
+                  }`}
                 >
                   {isSelected && (
-                    <div className="absolute top-1 right-1 w-5 h-5 bg-[#2F6BFD] rounded-full flex items-center justify-center shadow-md z-10">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20 6L9 17L4 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <>
+                      <div className="absolute -top-[20px] -right-[20px] w-[40px] h-[40px] bg-white rotate-45 z-10" />
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute top-1 right-1 z-20 text-[#4378FF]">
+                        <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
-                    </div>
+                    </>
                   )}
-                  <div className={`w-full h-full rounded-lg flex items-center justify-center overflow-hidden ${
-                    isSelected ? 'ring-2 ring-blue-200' : ''
-                  }`}>
+                  <div className="w-[38px] h-[38px] flex items-center justify-center shrink-0 relative z-0 mt-0.5">
                     {categoryImage ? (
                       <Image
                         src={categoryImage}
                         alt={categoryLabel}
-                        width={64}
-                        height={64}
-                        className="w-full h-full object-cover"
+                        width={38}
+                        height={38}
+                        className="w-full h-full object-contain drop-shadow-md"
                         onError={(e) => {
                           (e.target as HTMLImageElement).src = '/game.jpg';
                         }}
                       />
                     ) : (
-                      <div className={`w-full h-full flex items-center justify-center ${
-                        isSelected ? 'bg-blue-50' : 'bg-gray-50'
+                      <div className={`w-full h-full rounded-full flex items-center justify-center ${
+                        isSelected ? 'bg-white/20 text-white' : 'bg-blue-50 text-[#4378FF]'
                       }`}>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M6 3L3 6V18L6 21H18L21 18V6L18 3H6Z" stroke="#2F6BFD" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                          <path d="M12 8V16M8 12H16" stroke="#2F6BFD" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M6 3L3 6V18L6 21H18L21 18V6L18 3H6Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M12 8V16M8 12H16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                       </div>
                     )}
                   </div>
-                  <span className="text-gray-900 font-medium text-[10px] text-center leading-tight">{categoryLabel}</span>
+                  <span className={`font-medium text-[10px] text-center leading-[1.2] w-full px-0.5 break-words relative z-0 ${
+                    isSelected ? 'text-white' : 'text-gray-800'
+                  }`}>
+                    {categoryLabel}
+                  </span>
                 </button>
               );
               })}

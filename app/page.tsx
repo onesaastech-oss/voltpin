@@ -196,7 +196,7 @@ function HomeContent() {
   });
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F8F8F8] pb-20 relative">
+    <div className="min-h-screen flex flex-col bg-[#F8F8F8] pb-20 md:pb-0 relative">
       {/* Backdrop Blur - When menu is open */}
       {isMenuOpen && (
         <div
@@ -347,28 +347,38 @@ function HomeContent() {
         </div>
       </div>
       {/* Top Header Bar */}
-      <header className="bg-[#2F6BFD] px-4 py-3 flex items-center justify-between z-50 relative">
-        {/* Hamburger Menu */}
-        <button
-          onClick={() => setIsMenuOpen(true)}
-          className="text-white touch-manipulation"
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-          </svg>
-        </button>
+      <header className="bg-[#2F6BFD] px-4 md:px-8 py-3 md:py-0 md:h-20 flex items-center justify-between z-50 relative md:sticky md:top-0 shadow-sm">
+        <div className="flex items-center gap-4">
+          {/* Hamburger Menu - Mobile Only */}
+          <button
+            onClick={() => setIsMenuOpen(true)}
+            className="text-white touch-manipulation md:hidden"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+          </button>
 
-        {/* Logo - Absolute Center */}
-        <Link href="/" className="absolute left-1/2 -translate-x-1/2 touch-manipulation">
-          <Image
-            src="/logo.png"
-            alt="Voltpin Logo"
-            width={48}
-            height={48}
-            className="w-12 h-12 object-contain"
-            priority
-          />
-        </Link>
+          {/* Logo - Center on Mobile, Left on PC */}
+          <Link href="/" className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 touch-manipulation flex items-center">
+            <Image
+              src="/logo.png"
+              alt="Voltpin Logo"
+              width={48}
+              height={48}
+              className="w-12 h-12 md:w-14 md:h-14 object-contain drop-shadow-md"
+              priority
+            />
+          </Link>
+          
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex flex-row items-center gap-8 ml-8">
+            <Link href="/" className="text-white font-semibold text-sm hover:text-blue-200 transition-colors">Home</Link>
+            <Link href="/history" className="text-white font-semibold text-sm hover:text-blue-200 transition-colors">Order History</Link>
+            <Link href="/leaderboard" className="text-white font-semibold text-sm hover:text-blue-200 transition-colors">Leaderboard</Link>
+            <Link href="/announcement" className="text-white font-semibold text-sm hover:text-blue-200 transition-colors">News</Link>
+          </nav>
+        </div>
 
         {/* Points and Profile - Right */}
         <div className="flex items-center gap-2">
@@ -401,22 +411,22 @@ function HomeContent() {
       </header>
 
       {/* Main Content - Scrollable */}
-      <main className="flex-1 px-4 pb-4">
+      <main className="flex-1 w-full md:max-w-[1400px] md:mx-auto flex flex-col px-4 pb-4 md:px-8 md:pt-8 md:gap-6">
         {/* Banner Carousel Section */}
-        <div className="mb-4 bg-[#2F6BFD] -mx-4 px-4 pt-3 pb-4">
+        <div className="mb-4 md:mb-0 bg-[#2F6BFD] md:bg-transparent -mx-4 md:mx-0 px-4 pt-3 pb-4 md:p-0">
           {isLoadingBanners ? (
-            <div className="flex justify-center gap-2 overflow-x-auto scrollbar-hide pb-2">
+            <div className="flex justify-center gap-2 md:gap-6 overflow-x-auto scrollbar-hide pb-2 md:pb-0">
               {[1, 2, 3].map((item) => (
                 <div
                   key={item}
-                  className="shrink-0 w-[95%] max-w-md bg-white rounded-2xl shadow-md h-48 animate-pulse"
+                  className="shrink-0 w-[95%] max-w-md md:max-w-none md:w-[85%] bg-white rounded-2xl md:rounded-[2rem] shadow-md md:shadow-[0_8px_30px_rgb(0,0,0,0.08)] aspect-[21/9] animate-pulse"
                 />
               ))}
             </div>
           ) : banners.length > 0 ? (
             <div 
               ref={bannerScrollRef}
-              className="flex justify-center gap-2 overflow-x-auto scrollbar-hide pb-2 snap-x snap-mandatory scroll-smooth"
+              className="flex justify-center gap-2 md:gap-6 overflow-x-auto scrollbar-hide pb-2 md:pb-0 snap-x snap-mandatory scroll-smooth"
             >
               {banners
                 .filter((banner) => banner.type === 'primary banner' || banner.type === 'secondary banner')
@@ -426,14 +436,14 @@ function HomeContent() {
                     href={banner.url || '#'}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`shrink-0 w-[95%] max-w-md bg-white rounded-2xl shadow-md h-48 snap-center overflow-hidden relative mx-auto touch-manipulation active:scale-95 transition-transform`}
+                    className={`shrink-0 w-[95%] max-w-md md:max-w-none md:w-[85%] bg-white rounded-2xl md:rounded-[2rem] shadow-md md:shadow-[0_8px_30px_rgb(0,0,0,0.08)] aspect-[21/9] snap-center overflow-hidden relative mx-auto touch-manipulation active:scale-[0.98] transition-transform md:hover:shadow-[0_12px_40px_rgb(0,0,0,0.12)]`}
                   >
                     <Image
                       src={banner.image || '/game.jpg'}
                       alt={banner.title || 'Banner'}
                       fill
                       className="object-cover"
-                      sizes="(max-width: 640px) 95vw, 448px"
+                      sizes="(max-width: 640px) 95vw, 85vw"
                       onError={(e) => {
                         (e.target as HTMLImageElement).src = '/game.jpg';
                       }}
@@ -442,14 +452,14 @@ function HomeContent() {
                 ))}
             </div>
           ) : (
-            <div className="flex justify-center gap-2 overflow-x-auto scrollbar-hide pb-2">
-              <div className="shrink-0 w-[95%] max-w-md bg-white rounded-2xl shadow-md h-48 opacity-50" />
+            <div className="flex justify-center gap-2 md:gap-6 overflow-x-auto scrollbar-hide pb-2 md:pb-0">
+              <div className="shrink-0 w-[95%] max-w-md md:max-w-none md:w-[85%] bg-white rounded-2xl md:rounded-[2rem] shadow-md aspect-[21/9] opacity-50" />
             </div>
           )}
         </div>
 
         {/* Action Buttons */}
-        <div className="grid grid-cols-4 gap-1.5 sm:gap-2 mb-4 sm:mb-6">
+        <div className="grid grid-cols-4 md:flex md:justify-center md:flex-wrap gap-1.5 sm:gap-4 md:gap-10 mb-4 sm:mb-6 md:my-8 max-w-4xl mx-auto w-full">
           {[
             { icon: HiPlus, label: 'Add Points', href: '/add-points' },
             { icon: HiShoppingBag, label: 'Orders', href: '/history' },
@@ -458,26 +468,26 @@ function HomeContent() {
           ].map((item, index) => {
             const IconComponent = item.icon;
             return (
-              <div key={index} className="flex flex-col items-center gap-1.5 sm:gap-2">
+              <div key={index} className="flex flex-col items-center gap-1.5 sm:gap-2 md:gap-3 flex-1 max-w-[120px]">
                 <Link
                   href={item.href || '#'}
-                  className="bg-[#2F6BFD] rounded-lg sm:rounded-xl aspect-square w-16 sm:w-20 mx-auto p-3 sm:p-3.5 shadow-[0_4px_8px_rgba(0,0,0,0.15)] active:bg-[#2563eb] transition-colors touch-manipulation flex items-center justify-center"
+                  className="bg-[#2F6BFD] rounded-lg sm:rounded-xl md:rounded-3xl aspect-square w-16 sm:w-20 md:w-24 mx-auto p-3 sm:p-3.5 md:p-4 shadow-[0_4px_8px_rgba(0,0,0,0.15)] md:hover:-translate-y-1 md:hover:shadow-[0_8px_20px_rgba(47,107,253,0.3)] active:bg-[#2563eb] transition-all touch-manipulation flex items-center justify-center duration-300"
                 >
-                  <IconComponent className="text-white text-4xl sm:text-5xl" />
+                  <IconComponent className="text-white text-4xl sm:text-5xl md:text-[3.5rem]" />
                 </Link>
-                <span className="text-gray-800 text-xs sm:text-sm font-medium text-center leading-tight">{item.label}</span>
+                <span className="text-gray-800 text-xs sm:text-sm md:text-base font-medium md:font-bold text-center leading-tight">{item.label}</span>
               </div>
             );
           })}
         </div>
 
         {/* Filter and Search Bar */}
-        <div className="flex items-center gap-2 mb-4">
+        <div className="flex items-center gap-2 md:gap-4 mb-4 md:mb-8 md:max-w-4xl md:mx-auto md:w-full">
           {/* All Filter Button */}
           <div className="relative filter-dropdown-container">
             <button 
               onClick={() => setShowFilterDropdown(!showFilterDropdown)}
-              className="bg-[#2F6BFD] text-white px-3 py-2 rounded-full flex items-center gap-1 text-xs font-medium touch-manipulation shrink-0 active:bg-[#2563eb] transition-colors"
+              className="bg-[#2F6BFD] text-white px-3 md:px-6 py-2 md:py-3.5 rounded-full flex items-center gap-1.5 text-xs md:text-sm font-bold touch-manipulation shrink-0 active:bg-[#2563eb] md:hover:bg-[#2563eb] transition-colors shadow-sm"
             >
               <span>{selectedFilter}</span>
               <svg 
@@ -517,52 +527,49 @@ function HomeContent() {
             placeholder="search your game"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-1 min-w-0 bg-white px-3 py-2 rounded-full text-xs focus:outline-none focus:ring-2 focus:ring-[#2F6BFD] text-gray-800 placeholder-gray-400"
+            className="flex-1 min-w-0 bg-white px-4 md:px-6 py-2 md:py-3.5 rounded-full text-xs md:text-sm shadow-sm border border-gray-100 focus:outline-none focus:ring-2 focus:ring-[#2F6BFD]/50 text-gray-800 placeholder-gray-400 font-medium"
           />
 
           {/* Search Button */}
           <button 
-            onClick={() => {
-              // Search is already handled by filteredGames based on searchQuery
-              // This button can be used for additional search actions if needed
-            }}
-            className="bg-[#2F6BFD] text-white p-2 rounded-lg touch-manipulation shrink-0 active:bg-[#2563eb] transition-colors"
+            onClick={() => {}}
+            className="bg-[#2F6BFD] text-white p-2 md:p-3.5 rounded-full touch-manipulation shrink-0 active:bg-[#2563eb] md:hover:bg-[#2563eb] transition-colors shadow-sm"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2"/>
-              <path d="M21 21L16.65 16.65" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="md:w-5 md:h-5">
+              <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2.5"/>
+              <path d="M21 21L16.65 16.65" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
             </svg>
           </button>
         </div>
 
         {/* Game Cards Grid */}
         {isLoadingGames ? (
-          <div className="text-center py-8 text-gray-500">Loading games...</div>
+          <div className="text-center py-12 md:py-20 text-gray-500 font-medium">Loading games...</div>
         ) : filteredGames.length === 0 ? (
-          <div className="text-center py-8 text-gray-500">No games found</div>
+          <div className="text-center py-12 md:py-20 text-gray-500 font-medium">No games found</div>
         ) : (
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 md:gap-6">
             {filteredGames.map((game) => (
               <Link
                 key={game._id}
                 href={`/topup?gameId=${game._id}`}
-                className="bg-white rounded-xl shadow-md overflow-hidden touch-manipulation active:scale-95 transition-transform"
+                className="bg-white rounded-xl md:rounded-2xl shadow-sm md:shadow-md hover:shadow-lg overflow-hidden touch-manipulation active:scale-[0.98] transition-all duration-300 md:hover:-translate-y-1 group"
               >
                 {/* Game Image */}
-                <div className="relative h-32 w-full overflow-hidden">
+                <div className="relative h-32 md:h-48 lg:h-56 w-full overflow-hidden">
                   <Image
                     src={game.image || '/game.jpg'}
                     alt={game.name || 'Game'}
                     width={400}
-                    height={128}
-                    className="w-full h-full object-cover"
+                    height={224}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
 
                 {/* Game Info */}
-                <div className="p-2">
-                  <h3 className="text-gray-900 font-semibold text-xs mb-0.5">{game.name || 'Game'}</h3>
-                  <p className="text-gray-500 text-[10px]">{game.publisher || 'Publisher'}</p>
+                <div className="p-2 md:p-4">
+                  <h3 className="text-gray-900 font-bold text-xs md:text-[15px] mb-0.5 md:mb-1.5 leading-tight truncate">{game.name || 'Game'}</h3>
+                  <p className="text-gray-500 font-medium text-[10px] md:text-xs truncate">{game.publisher || 'Publisher'}</p>
                 </div>
               </Link>
             ))}
@@ -571,7 +578,9 @@ function HomeContent() {
       </main>
 
       {/* Bottom Navigation Bar */}
-      <BottomNav />
+      <div className="md:hidden">
+        <BottomNav />
+      </div>
     </div>
   );
 }
