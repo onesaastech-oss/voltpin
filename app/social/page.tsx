@@ -1,18 +1,40 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { FaInstagram, FaFacebook, FaWhatsapp, FaDiscord, FaTiktok, FaYoutube, FaTwitter } from 'react-icons/fa';
+import Link from 'next/link';
+import { FaInstagram, FaFacebook, FaWhatsapp, FaEnvelope, FaPhone } from 'react-icons/fa';
 
 export default function Social() {
-  const router = useRouter();
-  const socialPlatforms = [
-    { id: 'instagram', name: 'Instagram', icon: FaInstagram },
-    { id: 'facebook', name: 'Facebook', icon: FaFacebook },
-    { id: 'whatsapp', name: 'WhatsApp', icon: FaWhatsapp },
-    { id: 'discord', name: 'Discord', icon: FaDiscord },
-    { id: 'tiktok', name: 'Tik Tok', icon: FaTiktok },
-    { id: 'youtube', name: 'YouTube', icon: FaYoutube },
-    { id: 'twitter', name: 'Twitter', icon: FaTwitter },
+  const contactPlatforms = [
+    {
+      id: 'instagram',
+      name: 'Instagram',
+      icon: FaInstagram,
+      href: 'https://www.instagram.com/voltpin.in?igsh=MXJneWM0NHlvdXl0cw',
+    },
+    {
+      id: 'facebook',
+      name: 'Facebook',
+      icon: FaFacebook,
+      href: 'https://www.facebook.com/share/1CkNP65eez/',
+    },
+    {
+      id: 'whatsapp',
+      name: 'WhatsApp Support',
+      icon: FaWhatsapp,
+      href: 'https://wa.me/917678379687',
+    },
+    {
+      id: 'phone',
+      name: '7678379687',
+      icon: FaPhone,
+      href: 'tel:7678379687',
+    },
+    {
+      id: 'email',
+      name: 'voltpin123@gmail.com',
+      icon: FaEnvelope,
+      href: 'mailto:voltpin123@gmail.com',
+    },
   ];
 
   return (
@@ -21,18 +43,18 @@ export default function Social() {
       <div className="h-[50vh] min-h-[280px] bg-[#2F6BFD] flex flex-col items-center justify-start pt-8 sm:pt-12 relative px-4 shrink-0">
         {/* Back Button */}
         <div className="absolute top-4 left-4">
-          <button onClick={() => router.back()} className="text-white touch-manipulation">
+          <Link href="/profile" className="text-white touch-manipulation">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-          </button>
+          </Link>
         </div>
 
         {/* Title */}
         <div className="text-center text-white px-4 mt-8">
           <h1 className="text-3xl sm:text-4xl font-bold mb-3">Connect With Us!</h1>
           <p className="text-sm sm:text-base text-white/90 max-w-md">
-            Follow us on social media for the latest updates, gaming content, and exclusive offers!
+            Follow us and contact support using our official social links, WhatsApp, and email.
           </p>
         </div>
       </div>
@@ -47,16 +69,19 @@ export default function Social() {
 
             {/* Social Media Buttons */}
             <div className="space-y-3">
-              {socialPlatforms.map((platform) => {
+              {contactPlatforms.map((platform) => {
                 const IconComponent = platform.icon;
                 return (
-                  <button
+                  <a
                     key={platform.id}
+                    href={platform.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-full bg-[#2F6BFD] text-white py-4 px-4 rounded-xl flex items-center gap-4 shadow-md active:bg-[#2563eb] hover:bg-[#2563eb] transition-colors touch-manipulation"
                   >
                     <IconComponent className="text-white text-2xl shrink-0" />
                     <span className="text-white font-semibold text-base flex-1 text-left">{platform.name}</span>
-                  </button>
+                  </a>
                 );
               })}
             </div>

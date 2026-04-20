@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import toast from 'react-hot-toast';
 import { HiSpeakerphone } from 'react-icons/hi';
 import { HiChevronDown } from 'react-icons/hi';
@@ -18,7 +18,6 @@ interface Announcement {
 }
 
 function AnnouncementContent() {
-  const router = useRouter();
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -34,8 +33,11 @@ function AnnouncementContent() {
       const response = await otherAPI.getNews(1, 20);
       const data = await response.json();
 
-      if (response.ok && data.success && data.news) {
-        setAnnouncements(data.news);
+      const news = data?.data?.news ?? data?.news;
+
+      if (response.ok && data?.success && Array.isArray(news)) {
+        setAnnouncements(news);
+        setError(null);
       } else {
         const errorMsg = 'Failed to load announcements';
         setError(errorMsg);
@@ -73,11 +75,11 @@ function AnnouncementContent() {
       <header className="bg-[#2F6BFD] px-4 py-6 flex flex-col items-center relative">
         {/* Back Button */}
         <div className="absolute top-4 left-4">
-          <button onClick={() => router.back()} className="text-white touch-manipulation">
+          <Link href="/" className="text-white touch-manipulation">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-          </button>
+          </Link>
         </div>
 
         {/* Title */}
