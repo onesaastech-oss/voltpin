@@ -252,8 +252,8 @@ function HomeContent() {
             { icon: 'orders', label: 'Orders', href: '/history' },
             { icon: 'leaderboards', label: 'Leaderboards', href: '/leaderboard' },
             { icon: 'contact', label: 'Social', href: '/social' },
-            { icon: 'terms', label: 'Terms & Conditions', href: '#' },
-            { icon: 'privacy', label: 'Privacy & Policy', href: '#' },
+            { icon: 'terms', label: 'Terms & Conditions', href: '/terms-and-conditions' },
+            { icon: 'privacy', label: 'Privacy & Policy', href: '/privacy-policy' },
           ].map((item, index) => (
             <Link
               key={index}

@@ -27,16 +27,25 @@ export default function AuthChecker({ children }: AuthCheckerProps) {
       try {
         const response = await authAPI.getUserInfo();
         if (response.ok) {
+          // Server confirmed the token is valid
           setIsAuthenticated(true);
-        } else {
-          // Token is invalid or expired
+        } else if (response.status === 401) {
+          // 401 Unauthorized = token is genuinely invalid or expired — log out
+          console.warn('Auth token is invalid or expired (401). Logging out.');
           localStorage.removeItem('authToken');
           router.replace('/login');
+        } else {
+          // Any other server error (5xx, 429, etc.) — do NOT clear the token.
+          // The server may be temporarily unavailable; treat the user as still authenticated.
+          console.warn(`Auth check returned ${response.status}. Keeping token and treating user as authenticated.`);
+          setIsAuthenticated(true);
         }
       } catch (error) {
-        console.error('Error checking authentication:', error);
-        localStorage.removeItem('authToken');
-        router.replace('/login');
+        // Network error (no internet, server down, timeout, etc.)
+        // Do NOT remove the token — the user is not logged out just because the
+        // network is unreliable. Let them continue with their existing session.
+        console.warn('Network error during auth check. Keeping token and treating user as authenticated.', error);
+        setIsAuthenticated(true);
       } finally {
         setIsLoading(false);
       }

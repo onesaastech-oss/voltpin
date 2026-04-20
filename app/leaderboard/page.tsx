@@ -126,10 +126,10 @@ function LeaderboardContent() {
               </svg>
             </div>
             <span className="text-white text-sm font-medium mb-2">
-              {topThreePlayers[0]?.name || 'N/A'}
+              {topThreePlayers[1]?.name || 'N/A'}
             </span>
             <div className="bg-gray-800 text-white px-3 py-1.5 rounded-lg text-xs font-semibold mb-2">
-              ₹{topThreePlayers[0]?.totalPurchaseAmount?.toLocaleString() || '0'}
+              ₹{topThreePlayers[1]?.totalPurchaseAmount?.toLocaleString() || '0'}
             </div>
             <div className="w-16 h-20 bg-blue-400/30 rounded-t-lg"></div>
           </div>
@@ -144,10 +144,10 @@ function LeaderboardContent() {
               </svg>
             </div>
             <span className="text-white text-base font-medium mb-2">
-              {topThreePlayers[1]?.name || 'N/A'}
+              {topThreePlayers[0]?.name || 'N/A'}
             </span>
             <div className="bg-gray-800 text-white px-4 py-2 rounded-lg text-sm font-semibold mb-2">
-              ₹{topThreePlayers[1]?.totalPurchaseAmount?.toLocaleString() || '0'}
+              ₹{topThreePlayers[0]?.totalPurchaseAmount?.toLocaleString() || '0'}
             </div>
             <div className="w-20 h-28 bg-blue-400/40 rounded-t-lg"></div>
           </div>
