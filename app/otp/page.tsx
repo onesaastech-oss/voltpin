@@ -70,11 +70,20 @@ export default function OTPVerification() {
       <div className="h-[50vh] min-h-[280px] bg-[#2F6BFD] flex flex-col items-center justify-start pt-8 sm:pt-12 relative px-4 overflow-hidden">
         {/* Back Button */}
         <div className="absolute top-4 left-4 z-20">
-          <Link href="/login" className="text-white touch-manipulation">
+          <button
+            onClick={() => {
+              if (window.history.length > 1) {
+                router.back();
+              } else {
+                router.push('/login');
+              }
+            }}
+            className="text-white touch-manipulation"
+          >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-          </Link>
+          </button>
         </div>
         
         {/* Dashed circles background effect */}

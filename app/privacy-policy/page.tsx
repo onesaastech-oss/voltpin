@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 const sections = [
@@ -131,17 +132,27 @@ const sections = [
 ];
 
 export default function PrivacyPolicy() {
+  const router = useRouter();
   return (
     <div className="min-h-screen flex flex-col bg-white pb-20">
       {/* Header */}
       <header className="bg-[#2F6BFD] px-4 py-6 flex flex-col items-center relative">
         {/* Back Button */}
         <div className="absolute top-4 left-4">
-          <Link href="/" className="text-white touch-manipulation">
+          <button
+            onClick={() => {
+              if (window.history.length > 1) {
+                router.back();
+              } else {
+                router.push('/');
+              }
+            }}
+            className="text-white touch-manipulation"
+          >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-          </Link>
+          </button>
         </div>
 
         {/* Icon */}

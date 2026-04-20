@@ -105,7 +105,16 @@ export default function SignUp() {
       <div className="h-[50vh] min-h-[280px] bg-[#2F6BFD] flex flex-col items-center justify-start pt-8 sm:pt-12 relative px-4">
         {/* Back Button */}
         <div className="absolute top-4 left-4 z-20">
-          <Link href="/" className="text-white touch-manipulation">
+          <button
+            onClick={() => {
+              if (window.history.length > 1) {
+                router.back();
+              } else {
+                router.push('/');
+              }
+            }}
+            className="text-white touch-manipulation"
+          >
             <svg
               width="24"
               height="24"
@@ -121,7 +130,7 @@ export default function SignUp() {
                 strokeLinejoin="round"
               />
             </svg>
-          </Link>
+          </button>
         </div>
 
         {/* Logo */}
