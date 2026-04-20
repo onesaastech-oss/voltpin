@@ -447,13 +447,13 @@ export default function Checkout({ gameId = 'default-game-id' }: CheckoutProps =
                 </div>
                 <div className="flex-1">
                   <h2 className="text-gray-900 font-bold text-lg mb-1">{gameData.name || 'Game'}</h2>
-                  <p className="text-gray-500 text-sm">{validatedInfo?.nickname || 'N.A'}</p>
+                  <p className="text-gray-500 text-sm">{gameData?.publisher || 'N.AAA'}</p>
                 </div>
-                <button className="w-6 h-6 bg-[#2F6BFD] rounded-full flex items-center justify-center shrink-0">
+                {/* <button className="w-6 h-6 bg-[#2F6BFD] rounded-full flex items-center justify-center shrink-0">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 8V12M12 16H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="white" strokeWidth="2" strokeLinecap="round"/>
                   </svg>
-                </button>
+                </button> */}
               </div>
             )}
           </div>
@@ -464,12 +464,12 @@ export default function Checkout({ gameId = 'default-game-id' }: CheckoutProps =
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
             <div className="px-4 pt-4 pb-4">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-gray-900 font-semibold text-base">Enter your informations</h3>
-                <button className="text-gray-400 hover:text-gray-600 touch-manipulation">
+                <h3 className="text-gray-900 font-semibold text-base">Enter your information</h3>
+                {/* <button className="text-gray-400 hover:text-gray-600 touch-manipulation">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 8V12M12 16H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
                   </svg>
-                </button>
+                </button> */}
               </div>
               <div className="space-y-3 mb-4">
                 {gameData?.validationFields && Array.isArray(gameData.validationFields) && gameData.validationFields.length > 0 ? (
