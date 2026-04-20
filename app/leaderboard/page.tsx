@@ -16,12 +16,12 @@ interface LeaderboardPlayer {
 }
 
 interface LeaderboardData {
-  currentMonth: {
-    month: string;
+  currentPeriod: {
+    period: string;
     leaderboard: LeaderboardPlayer[];
   };
-  lastMonth: {
-    month: string;
+  lastPeriod: {
+    period: string;
     leaderboard: LeaderboardPlayer[];
   };
 }
@@ -60,21 +60,21 @@ function LeaderboardContent() {
   };
 
   // Get top 3 players from current month leaderboard
-  const topThreePlayers = leaderboardData?.currentMonth?.leaderboard?.slice(0, 3) || [];
+  const topThreePlayers = leaderboardData?.currentPeriod?.leaderboard?.slice(0, 3) || [];
   
   // Get remaining players (ranks 4-11) from current month leaderboard
-  const rankedPlayers = leaderboardData?.currentMonth?.leaderboard?.slice(3, 11) || [];
+  const rankedPlayers = leaderboardData?.currentPeriod?.leaderboard?.slice(3, 11) || [];
 
   if (isLoading) {
     return (
       <div className="min-h-screen flex flex-col bg-white pb-20">
         <header className="bg-[#2F6BFD] px-4 py-3 flex items-center gap-3 relative">
-          <button onClick={() => router.back()} className="text-white touch-manipulation">
+          <button onClick={() => router.push('/')} className="text-white touch-manipulation">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
-          <h1 className="text-white font-bold text-lg flex-1 text-center absolute left-0 right-0">Leaderboards</h1>
+          <h1 className="text-white font-bold text-lg flex-1 text-center absolute left-0 right-0 pointer-events-none">Leaderboards</h1>
         </header>
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center text-gray-500">Loading leaderboard...</div>
@@ -87,12 +87,12 @@ function LeaderboardContent() {
     return (
       <div className="min-h-screen flex flex-col bg-white pb-20">
         <header className="bg-[#2F6BFD] px-4 py-3 flex items-center gap-3 relative">
-          <button onClick={() => router.back()} className="text-white touch-manipulation">
+          <button onClick={() => router.push('/')} className="text-white touch-manipulation">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
-          <h1 className="text-white font-bold text-lg flex-1 text-center absolute left-0 right-0">Leaderboards</h1>
+          <h1 className="text-white font-bold text-lg flex-1 text-center absolute left-0 right-0 pointer-events-none">Leaderboards</h1>
         </header>
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center text-gray-500">{error}</div>
@@ -105,12 +105,12 @@ function LeaderboardContent() {
     <div className="min-h-screen flex flex-col bg-white pb-20">
       {/* Header */}
       <header className="bg-[#2F6BFD] px-4 py-3 flex items-center gap-3 relative">
-        <button onClick={() => router.back()} className="text-white touch-manipulation">
+        <button onClick={() => router.push('/')} className="text-white touch-manipulation">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
-        <h1 className="text-white font-bold text-lg flex-1 text-center absolute left-0 right-0">Leaderboards</h1>
+        <h1 className="text-white font-bold text-lg flex-1 text-center absolute left-0 right-0 pointer-events-none">Leaderboards</h1>
       </header>
 
       {/* Top 3 Leaderboard Section */}
