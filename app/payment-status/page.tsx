@@ -14,12 +14,12 @@ function PaymentStatusContent() {
   const searchParams = useSearchParams();
   const [status, setStatus] = useState<'pending' | 'success' | 'failed' | 'cancelled'>('pending');
   const [paymentDetails, setPaymentDetails] = useState({
+    transactionId: '',
     orderId: '',
     paymentTime: '',
-    gameName: '',
-    userId: '',
-    zoneId: '',
-    pack: '',
+    amount: '',
+    paymentMethod: '',
+    note: '',
   });
   const [isLoading, setIsLoading] = useState(true);
 
@@ -58,12 +58,12 @@ function PaymentStatusContent() {
         
         // Map API response fields to payment details
         setPaymentDetails({
-          orderId: tx.orderId || clientTxnId || txnId || 'N/A',
+          transactionId: tx.transactionId || tx.providerReferenceId || clientTxnId || txnId || 'N/A',
+          orderId: tx.merchantOrderId || tx.orderId || 'N/A',
           paymentTime: tx.createdAt || tx.updatedAt || new Date().toISOString(),
-          gameName: tx.paymentNote || 'Game Purchase',
-          userId: tx.customerNumber || tx.customerName || 'N/A',
-          zoneId: 'N/A', // Not available in API response
-          pack: tx.paymentNote || 'Pack',
+          amount: tx.amount ? `${tx.currency || 'INR'} ${tx.amount}` : 'N/A',
+          paymentMethod: tx.paymentInstrument?.type || tx.paymentMethod || 'Online Payment',
+          note: tx.paymentNote || tx.description || 'Wallet Recharge / Purchase',
         });
       } else {
         setStatus('failed');
@@ -157,7 +157,7 @@ function PaymentStatusContent() {
           <>
             {/* Status Icon */}
             <div className={`w-32 h-32 rounded-full flex items-center justify-center shadow-lg mb-6 ${
-              status === 'success' ? 'bg-green-500' :
+              status === 'success' ? 'bg-[#2F6BFD]' :
               status === 'failed' ? 'bg-red-500' :
               status === 'cancelled' ? 'bg-gray-500' :
               'bg-yellow-500'
@@ -188,9 +188,15 @@ function PaymentStatusContent() {
           <div className="w-full max-w-md bg-[#2F6BFD] rounded-2xl shadow-lg p-6 mb-8">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
+                <span className="text-white/90 text-sm">Transaction ID</span>
+                <p className="text-white font-semibold text-base text-right">
+                  {paymentDetails.transactionId}
+                </p>
+              </div>
+              <div className="flex items-center justify-between">
                 <span className="text-white/90 text-sm">Order ID</span>
                 <p className="text-white font-semibold text-base text-right">
-                  {paymentDetails.orderId || 'N/A'}
+                  {paymentDetails.orderId !== 'N/A' ? paymentDetails.orderId : '---'}
                 </p>
               </div>
               <div className="flex items-center justify-between">
@@ -199,30 +205,24 @@ function PaymentStatusContent() {
                   {formatDate(paymentDetails.paymentTime)}
                 </p>
               </div>
-            <div className="flex items-center justify-between">
-              <span className="text-white/90 text-sm">Game Name</span>
-              <p className="text-white font-semibold text-base text-right">
-                {paymentDetails.gameName}
-              </p>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-white/90 text-sm">User ID</span>
-              <p className="text-white font-semibold text-base text-right">
-                {paymentDetails.userId}
-              </p>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-white/90 text-sm">Zone ID</span>
-              <p className="text-white font-semibold text-base text-right">
-                {paymentDetails.zoneId}
-              </p>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-white/90 text-sm">Pack</span>
-              <p className="text-white font-semibold text-base text-right">
-                {paymentDetails.pack}
-              </p>
-            </div>
+              <div className="flex items-center justify-between">
+                <span className="text-white/90 text-sm">Amount</span>
+                <p className="text-white font-semibold text-base text-right">
+                  {paymentDetails.amount}
+                </p>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-white/90 text-sm">Payment Method</span>
+                <p className="text-white font-semibold text-base text-right capitalize">
+                  {paymentDetails.paymentMethod}
+                </p>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-white/90 text-sm">Note</span>
+                <p className="text-white font-semibold text-base text-right">
+                  {paymentDetails.note}
+                </p>
+              </div>
           </div>
         </div>
         )}
