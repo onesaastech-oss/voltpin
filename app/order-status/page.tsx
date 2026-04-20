@@ -97,7 +97,7 @@ function OrderStatusContent() {
           amount: order.amount?.toString() || '0',
           currency: order.currency || 'INR',
           paymentMethod: order.paymentMethod || 'N/A',
-          itemName: firstItem?.itemName || parsedDescription || 'Diamond Pack',
+          itemName: (firstItem?.itemName || parsedDescription || 'Diamond Pack').split('-')[0].trim(),
           quantity: firstItem?.quantity?.toString() || '1',
           playerId: playerId || 'N/A',
           server: server || 'N/A',
@@ -198,7 +198,7 @@ function OrderStatusContent() {
           <>
             {/* Status Icon */}
             <div className={`w-32 h-32 rounded-full flex items-center justify-center shadow-lg mb-6 ${
-              status === 'success' ? 'bg-green-500' :
+              status === 'success' ? 'bg-[#2F6BFD]' :
               status === 'failed' ? 'bg-red-500' :
               status === 'cancelled' ? 'bg-gray-500' :
               status === 'processing' ? 'bg-blue-500' :
